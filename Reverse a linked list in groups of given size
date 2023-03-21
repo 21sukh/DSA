@@ -1,0 +1,66 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+struct node {
+    int data;
+    struct node *next;
+};
+
+struct node* reverse_group(struct node *head, int k) {
+    struct node *current = head;
+    struct node *prev = NULL;
+    struct node *next = NULL;
+    int count = 0;
+
+    // Reverse the first k nodes of the linked list
+    while (current != NULL && count < k) {
+        next = current->next;
+        current->next = prev;
+        prev = current;
+        current = next;
+        count++;
+    }
+
+    // Recursively call the reverse_group function for the remaining nodes
+    if (next != NULL) {
+        head->next = reverse_group(next, k);
+    }
+
+    // Return the new head of the reversed linked list
+    return prev;
+}
+
+void print_list(struct node *head) {
+    struct node *current = head;
+    while (current != NULL) {
+        printf("%d -> ", current->data);
+        current = current->next;
+    }
+    printf("NULL\n");
+}
+
+int main() {
+    // Create a linked list: 1->2->3->4->5->6->7->8->9->10
+    struct node *head = (struct node*) malloc(sizeof(struct node));
+    head->data = 1;
+
+    struct node *current = head;
+    for (int i = 2; i <= 10; i++) {
+        struct node *new_node = (struct node*) malloc(sizeof(struct node));
+        new_node->data = i;
+        current->next = new_node;
+        current = new_node;
+    }
+    current->next = NULL;
+
+    printf("Original Linked List:\n");
+    print_list(head);
+
+    // Reverse the linked list in groups of 3 nodes
+    head = reverse_group(head, 3);
+
+    printf("Reversed Linked List:\n");
+    print_list(head);
+
+    return 0;
+}
