@@ -1,0 +1,71 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+struct node {
+    int data;
+    struct node *next;
+};
+
+void find_nth_from_end(struct node *head, int n) {
+    if (head == NULL) {
+        printf("The linked list is empty\n");
+        return;
+    }
+
+    struct node *fast_ptr = head;
+    struct node *slow_ptr = head;
+
+    // Move the fast pointer n positions ahead of the slow pointer
+    for (int i = 0; i < n; i++) {
+        if (fast_ptr == NULL) {
+            printf("The linked list has less than %d nodes\n", n);
+            return;
+        }
+        fast_ptr = fast_ptr->next;
+    }
+
+    // Move both the slow and fast pointers until the fast pointer reaches the end of the linked list
+    while (fast_ptr != NULL) {
+        slow_ptr = slow_ptr->next;
+        fast_ptr = fast_ptr->next;
+    }
+
+    // The slow pointer is now pointing to the nth node from the end of the linked list
+    printf("The %dth node from the end is %d\n", n, slow_ptr->data);
+}
+
+int main() {
+    // Create a linked list: 1->2->3->4->5->6->7
+    struct node *head = (struct node*) malloc(sizeof(struct node));
+    head->data = 1;
+
+    struct node *second = (struct node*) malloc(sizeof(struct node));
+    second->data = 2;
+    head->next = second;
+
+    struct node *third = (struct node*) malloc(sizeof(struct node));
+    third->data = 3;
+    second->next = third;
+
+    struct node *fourth = (struct node*) malloc(sizeof(struct node));
+    fourth->data = 4;
+    third->next = fourth;
+
+    struct node *fifth = (struct node*) malloc(sizeof(struct node));
+    fifth->data = 5;
+    fourth->next = fifth;
+
+    struct node *sixth = (struct node*) malloc(sizeof(struct node));
+    sixth->data = 6;
+    fifth->next = sixth;
+
+    struct node *seventh = (struct node*) malloc(sizeof(struct node));
+    seventh->data = 7;
+    sixth->next = seventh;
+    seventh->next = NULL;
+
+    // Find the 3rd node from the end of the linked list
+    find_nth_from_end(head, 3);
+
+    return 0;
+}
