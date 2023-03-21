@@ -1,0 +1,23 @@
+#include <stdio.h>
+
+int main() {
+    int arr[] = {1, 2, 3, 4, 5};
+    int size = sizeof(arr)/sizeof(arr[0]); // calculate size of array
+    int temp, i, j;
+
+    // loop through array until the middle element
+    for (i = 0, j = size-1; i < j; i++, j--) {
+        // swap elements
+        temp = arr[i];
+        arr[i] = arr[j];
+        arr[j] = temp;
+    }
+
+    // print reversed array
+    printf("Reversed array: ");
+    for (i = 0; i < size; i++) {
+        printf("%d ", arr[i]);
+    }
+
+    return 0;
+}
