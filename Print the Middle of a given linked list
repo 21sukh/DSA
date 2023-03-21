@@ -1,0 +1,56 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+struct node {
+    int data;
+    struct node *next;
+};
+
+void print_middle(struct node *head) {
+    struct node *slow_ptr = head;
+    struct node *fast_ptr = head;
+
+    if (head != NULL) {
+        while (fast_ptr != NULL && fast_ptr->next != NULL) {
+            fast_ptr = fast_ptr->next->next;
+            slow_ptr = slow_ptr->next;
+        }
+        printf("The middle element is %d\n", slow_ptr->data);
+    }
+}
+
+int main() {
+    // Create a linked list: 1->2->3->4->5->6->7
+    struct node *head = (struct node*) malloc(sizeof(struct node));
+    head->data = 1;
+
+    struct node *second = (struct node*) malloc(sizeof(struct node));
+    second->data = 2;
+    head->next = second;
+
+    struct node *third = (struct node*) malloc(sizeof(struct node));
+    third->data = 3;
+    second->next = third;
+
+    struct node *fourth = (struct node*) malloc(sizeof(struct node));
+    fourth->data = 4;
+    third->next = fourth;
+
+    struct node *fifth = (struct node*) malloc(sizeof(struct node));
+    fifth->data = 5;
+    fourth->next = fifth;
+
+    struct node *sixth = (struct node*) malloc(sizeof(struct node));
+    sixth->data = 6;
+    fifth->next = sixth;
+
+    struct node *seventh = (struct node*) malloc(sizeof(struct node));
+    seventh->data = 7;
+    sixth->next = seventh;
+    seventh->next = NULL;
+
+    // Call the print_middle function
+    print_middle(head);
+
+    return 0;
+}
